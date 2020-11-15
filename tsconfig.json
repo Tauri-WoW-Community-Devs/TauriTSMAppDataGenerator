@@ -1,16 +1,14 @@
 {
   "compileOnSave": true,
   "compilerOptions": {
-    "allowJs": true,
+    "allowJs": false,
     "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
     "declaration": true,
     "emitDecoratorMetadata": true,
     "esModuleInterop": true,
-    "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
-    "jsx": "preserve",
     "lib": [
       "dom",
       "dom.iterable",
@@ -20,15 +18,11 @@
     "moduleResolution": "node",
     "noEmit": false,
     "outDir": "dist",
-    "pretty": true,
     "removeComments": true,
     "resolveJsonModule": true,
-    "skipLibCheck": true,
-    "sourceMap": true,
     "sourceRoot": "src",
     "strict": true,
-    "strictPropertyInitialization": false,
-    "target": "ES5"
+    "target": "ES6"
   },
   "exclude": [
     "dist",
