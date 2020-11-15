@@ -23,15 +23,21 @@ type TSMItemObject = {
 
 export const generateTSMAppData = async () => {
   const aInfo = await getAuctionsInfo();
-  if (!aInfo || aInfo.lastModified <= lastModified)
+  if (!aInfo || aInfo.lastModified <= lastModified) {
+    log("Up-to date");
     return;
+  }
 
   const auctions = await getAuctionsData();
-  if (!auctions?.auctions)
+  if (!auctions?.auctions) {
+    log("No auctions were found", "WARN");
     return;
+  }
 
   const alliance = parseAHInfo(auctions.auctions.auctioner_2);
+  log("Parsing AH Info - Alliance");
   const horde = parseAHInfo(auctions.auctions.auctioner_6);
+  log("Parsing AH Info - Horde");
 
   const data: TSMRealmInfo = {alliance, horde};
   const lua = generateFile(data, aInfo.lastModified);
@@ -41,6 +47,7 @@ export const generateTSMAppData = async () => {
 };
 
 const generateFile = (data: TSMRealmInfo, lastMod: number) => {
+  log("Generating AppData.lua");
   const realms = [Realms.TAURI, Realms.EVERMOON];
 
   const json = JSON.stringify(data);
@@ -122,3 +129,12 @@ const standardDeviation = (prices: number[]) => {
 
 const sum = (prices: number[]) => prices.reduce((prev, curr) => prev + curr);
 const avg = (prices: number[]) => sum(prices) / prices.length;
+
+const log = (msg: string, type: "ERROR" | "WARN" | "OK" = "OK") => {
+  let color = "\x1b[0m"; // RESET;
+  if (type === "ERROR")
+    color = "\x1b[31m";
+  else if (type === "WARN")
+    color = "\"\x1b[33m\"";
+  console.log(color, `[TSM] ${msg}`);
+};
