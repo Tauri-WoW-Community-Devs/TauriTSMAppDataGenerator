@@ -1,0 +1,27 @@
+name: Compilation
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        node: [ '10', '12', '14', '15' ]
+    runs-on: 
+      - windows-latest
+      - ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2.1.2
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: yarn install
+        run: yarn install
+
+      - name: tsc
+        uses: yarn build
