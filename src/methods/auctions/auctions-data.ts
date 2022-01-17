@@ -1,6 +1,6 @@
 import {apiCall, Realms} from "../../lib/api";
 
-export const getAuctionsData = () => apiCall<AuctionsDataResult>("auctions-data", Realms.TAURI);
+export const getAuctionsData = (realm: Realms = Realms.TAURI) => apiCall<AuctionsDataResult>("auctions-data", realm);
 
 // region Types
 export type AuctionsDataResult = {

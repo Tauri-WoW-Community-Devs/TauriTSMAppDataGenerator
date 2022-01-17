@@ -8,5 +8,6 @@ initServer();
 
 // Every minute
 cron.schedule("* * * * *", async () => {
-  await generateTSMAppData();
+  await generateTSMAppData(false);
+  await generateTSMAppData(true);
 });

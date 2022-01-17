@@ -1,6 +1,6 @@
 import {apiCall, Realms} from "../../lib/api";
 
-export const getAuctionsInfo = () => apiCall<AuctionsInfoResult>("auctions-info", Realms.TAURI);
+export const getAuctionsInfo = (realm: Realms = Realms.TAURI) => apiCall<AuctionsInfoResult>("auctions-info", realm);
 
 type AuctionsInfoResult = {
   isCata: boolean;

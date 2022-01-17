@@ -1,12 +1,14 @@
 import {NextFunction, Request, Response} from "express";
 import {getAuctionsItemPrices} from "../methods/auctions/auctions-item-prices";
 import {AuctionItem} from "../methods/auctions/auctions-data";
+import { Realms } from "src/lib/api";
 
 type Faction = "ALLIANCE" | "HORDE" | "BOTH";
 type Body = {
   [key in string]: {
     price: number;
-    faction: Faction
+    faction: Faction;
+    realm: Realms;
   };
 }
 
@@ -23,14 +25,20 @@ export const checkPrices = async (req: Request, res: Response, next: NextFunctio
 
   let result: Result = [];
   for (const itemId of Object.keys(body)) {
-    const {price, faction} = body[itemId];
+    const { price, faction, realm } = body[itemId];
     if (!price || !faction) {
       res.status(400).end();
       continue;
     }
 
     const id = Number(itemId);
-    const itemInfo = await getAuctionsItemPrices(id);
+    
+    let itemInfo = await getAuctionsItemPrices(id);
+    if(realm)
+    {
+      itemInfo = await getAuctionsItemPrices(id, realm);
+    }
+
     if (!itemInfo)
       continue;
 

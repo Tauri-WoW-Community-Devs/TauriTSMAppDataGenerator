@@ -21,14 +21,34 @@ type TSMItemObject = {
   [key in string]: TSMItem
 }
 
-export const generateTSMAppData = async () => {
-  const aInfo = await getAuctionsInfo();
+export const generateTSMAppData = async (isStormforge: boolean) => {
+  
+  let aInfo;
+  if(isStormforge)
+  {
+    aInfo= await getAuctionsInfo(Realms.MB);
+  }
+  else
+  {
+    aInfo= await getAuctionsInfo();
+  }
+
+
   if (!aInfo || aInfo.lastModified <= lastModified) {
     log("Up-to date");
     return;
   }
 
-  const auctions = await getAuctionsData();
+  let auctions;
+  if(isStormforge)
+  {
+    auctions= await getAuctionsData(Realms.MB);
+  }
+  else
+  {
+    auctions= await getAuctionsData();
+  }
+
   if (!auctions?.auctions) {
     log("No auctions were found", "WARN");
     return;
@@ -40,15 +60,19 @@ export const generateTSMAppData = async () => {
   log("Parsing AH Info - Horde");
 
   const data: TSMRealmInfo = {alliance, horde};
-  const lua = generateFile(data, aInfo.lastModified);
+  const lua = generateFile(data, aInfo.lastModified, isStormforge);
 
   lastModified = aInfo.lastModified;
   return lua;
 };
 
-const generateFile = (data: TSMRealmInfo, lastMod: number) => {
+const generateFile = (data: TSMRealmInfo, lastMod: number, isStormforge: boolean) => {
   log("Generating AppData.lua");
-  const realms = [Realms.TAURI, Realms.EVERMOON];
+  let realms = [Realms.TAURI, Realms.EVERMOON];
+  if(isStormforge)
+  {
+    realms = [Realms.MB];
+  }
 
   const json = JSON.stringify(data);
 
@@ -62,7 +86,7 @@ TSM.AppData = {
 ${appData}
 }`;
 
-  const outDir = process.env.OUTPUT_DIR!;
+  const outDir = isStormforge ? process.env.STORMFORGE_OUTPUT_DIR! : process.env.OUTPUT_DIR!;
 
   fs.mkdirSync(outDir, {recursive: true});
   fs.writeFileSync(path.join(outDir, "AppData.lua"), lua);
