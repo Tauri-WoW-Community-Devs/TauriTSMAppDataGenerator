@@ -4,6 +4,16 @@
     "allowJs": false,
     "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
+    "paths": {
+      "@/src/*": [
+        "src/*"
+      ]
+    },
+    "plugins": [
+      {
+        "transform": "@zerollup/ts-transform-paths",
+      }
+    ],
     "declaration": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,

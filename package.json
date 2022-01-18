@@ -4,7 +4,7 @@
   "main": "src/index.ts",
   "license": "MIT",
   "scripts": {
-    "build": "tsc",
+    "build": "ttsc -P ./tsconfig.json",
     "start": "ts-node -r tsconfig-paths/register ./src/index.ts"
   },
   "eslintConfig": {
@@ -13,19 +13,21 @@
     ]
   },
   "devDependencies": {
-    "@topsoft4u/eslint-config": "^1.0.30",
-    "@types/express": "^4.17.13",
-    "@types/node": "^17.0.9",
-    "@types/node-cron": "^3.0.1",
-    "axios": "^0.24.0",
-    "eslint": "^8.7.0",
-    "ts-node": "^10.4.0",
-    "tsconfig-paths": "^3.12.0",
-    "typescript": "^4.5.4"
+    "@topsoft4u/eslint-config": "1.0.30",
+    "@types/express": "4.17.13",
+    "@types/node": "17.0.9",
+    "@types/node-cron": "3.0.1",
+    "@zerollup/ts-transform-paths": "1.7.18",
+    "axios": "0.24.0",
+    "eslint": "8.7.0",
+    "ts-node": "10.4.0",
+    "tsconfig-paths": "3.12.0",
+    "ttypescript": "1.5.13",
+    "typescript": "4.4.4"
   },
   "dependencies": {
-    "dotenv": "^14.2.0",
-    "express": "^4.17.2",
-    "node-cron": "^3.0.0"
+    "dotenv": "14.2.0",
+    "express": "4.17.2",
+    "node-cron": "3.0.0"
   }
 }
