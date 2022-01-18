@@ -1,6 +1,7 @@
-import {apiCall, Realms} from "../../lib/api";
+import {apiCall} from "src/lib/api";
+import {Realm} from "src/constants/realms";
 
-export const getAuctionsData = (realm: Realms = Realms.TAURI) => apiCall<AuctionsDataResult>("auctions-data", realm);
+export const fetchAuctionsData = (realm: Realm = Realm.TAURI) => apiCall<AuctionsDataResult>("auctions-data", realm);
 
 // region Types
 export type AuctionsDataResult = {
@@ -9,10 +10,10 @@ export type AuctionsDataResult = {
   realm: string
   dataUrlPrefix: string
   lastModified: number
-  auctions: Auctions
+  auctions: AuctionHouses
 }
 
-type Auctions = {
+type AuctionHouses = {
   auctioner_2: AuctionItem[] // Alliance
   auctioner_6: AuctionItem[] // Horde
   auctioner_7: AuctionItem[] // Neutral
@@ -30,7 +31,7 @@ export type AuctionItem = {
   item: number
   itemData: ItemData
   owner: string
-  ownerRealm: Realms
+  ownerRealm: Realm
   bid: number
   buyout: number
   timeLeft: TimeLeft

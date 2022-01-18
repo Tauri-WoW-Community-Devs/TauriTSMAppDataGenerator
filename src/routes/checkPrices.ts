@@ -1,18 +1,23 @@
 import {NextFunction, Request, Response} from "express";
-import {getAuctionsItemPrices} from "../methods/auctions/auctions-item-prices";
+import {Realm} from "src/constants/realms";
+import {fetchAuctionsItemPrices} from "../methods/auctions/auctions-item-prices";
 import {AuctionItem} from "../methods/auctions/auctions-data";
-import { Realms } from "src/lib/api";
 
 type Faction = "ALLIANCE" | "HORDE" | "BOTH";
 type Body = {
   [key in string]: {
     price: number;
     faction: Faction;
-    realm: Realms;
+    realm: Realm;
   };
 }
 
-type Result = Array<Pick<AuctionItem, "timeLeft" | "stackCount"> & {pricePerItem: AuctionItem["buyout"], itemId: AuctionItem["item"], itemName: AuctionItem["itemData"]["itemName"]}>;
+type Result = Array<Pick<AuctionItem, "timeLeft" | "stackCount">
+  & {
+  pricePerItem: AuctionItem["buyout"],
+  itemId: AuctionItem["item"],
+  itemName: AuctionItem["itemData"]["itemName"]
+}>;
 
 export const checkPrices = async (req: Request, res: Response, next: NextFunction) => {
   const {body}: {body: Body} = req;
@@ -25,20 +30,15 @@ export const checkPrices = async (req: Request, res: Response, next: NextFunctio
 
   let result: Result = [];
   for (const itemId of Object.keys(body)) {
-    const { price, faction, realm } = body[itemId];
+    const {price, faction, realm} = body[itemId];
     if (!price || !faction) {
       res.status(400).end();
       continue;
     }
 
     const id = Number(itemId);
-    
-    let itemInfo = await getAuctionsItemPrices(id);
-    if(realm)
-    {
-      itemInfo = await getAuctionsItemPrices(id, realm);
-    }
 
+    const itemInfo = await fetchAuctionsItemPrices(id, realm);
     if (!itemInfo)
       continue;
 
@@ -63,7 +63,6 @@ export const checkPrices = async (req: Request, res: Response, next: NextFunctio
     if (!items.length)
       continue;
 
-    console.log(items);
     result = result.concat(items);
   }
 

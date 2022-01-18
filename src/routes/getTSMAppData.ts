@@ -1,14 +1,22 @@
-import path from "path";
 import {NextFunction, Request, Response} from "express";
+import {getQueryRealms} from "src/utils";
+import {generateTSMAppData} from "src/services/generateTSMAppData";
 
-export const getTSMAppData = (req: Request, res: Response, next: NextFunction) => {
-  const isStormforge = req.query.isStormforge;
-  
-  let filePath = path.join(process.env.OUTPUT_DIR!, "AppData.lua");
-  if(isStormforge == "1")
-  {
-    filePath = path.join(process.env.STORMFORGE_OUTPUT_DIR!, "AppData.lua");
-  }
-  
-  res.download(filePath);
+export const getTSMAppData = async (req: Request, res: Response, next: NextFunction) => {
+  const realms = getQueryRealms(req);
+
+  const lua = await generateTSMAppData(realms);
+
+  const cacheTime = 5;
+
+  const now = new Date();
+  const expires = new Date();
+  expires.setMinutes(now.getMinutes() + cacheTime);
+
+  res.set({
+    "Content-Type": "text/plain",
+  });
+
+  res.status(200).send(lua);
+  next();
 };

@@ -32,3 +32,4 @@ yarn-error.log
 tsconfig.tsbuildinfo
 .vscode
 .idea
+.cache

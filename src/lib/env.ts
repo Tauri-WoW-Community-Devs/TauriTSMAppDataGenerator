@@ -16,7 +16,7 @@ export const initDotEnv = () => {
     path: envFile
   });
 
-  const envVariables = ["API_KEY", "SECRET_KEY", "OUTPUT_DIR"];
+  const envVariables = ["API_KEY", "SECRET_KEY"];
   envVariables.forEach(env => {
     if (!process.env[env])
       throw new Error(`Missing .env variable: ${env}`);
