@@ -6,7 +6,7 @@ export const apiCall = async <T>(url: string, realm: Realm, params?: { [key: str
     const config: AxiosRequestConfig = {
       headers: {
         "Content-Type": "application/json",
-        'User-Agent': 'TauriTSMAppDataGenerator'
+        "User-Agent": "TauriTSMAppDataGenerator"
       },
     };
 
