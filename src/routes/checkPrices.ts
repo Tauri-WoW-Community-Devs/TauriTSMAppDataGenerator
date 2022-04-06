@@ -31,11 +31,8 @@ export const checkPrices = async (req: Request, res: Response, next: NextFunctio
   let result: Result = [];
   for (const itemId of Object.keys(body)) {
     const {price, faction, realm} = body[itemId];
-    if (!price || !faction) {
-      res.status(400).end();
-      next();
-      return;
-    }
+    if (!price || !faction)
+      continue;
 
     const id = Number(itemId);
 
