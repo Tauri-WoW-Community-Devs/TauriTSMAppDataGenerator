@@ -33,7 +33,8 @@ export const checkPrices = async (req: Request, res: Response, next: NextFunctio
     const {price, faction, realm} = body[itemId];
     if (!price || !faction) {
       res.status(400).end();
-      continue;
+      next();
+      return;
     }
 
     const id = Number(itemId);
