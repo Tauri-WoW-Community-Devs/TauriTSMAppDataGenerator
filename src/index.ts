@@ -8,7 +8,7 @@ import {initServer} from "./lib/server";
 initDotEnv();
 initServer();
 
-const realms = [Realm.TAURI, Realm.EVERMOON, Realm.MISTBLADE];
+const realms = [Realm.TAURI, Realm.EVERMOON, Realm.MISTBLADE, Realm.MISTBLADE_S2];
 
 let fetchAHInProgress = false;
 

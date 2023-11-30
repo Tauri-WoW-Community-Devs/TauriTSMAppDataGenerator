@@ -2,7 +2,8 @@ export enum Realm {
   TAURI = "[HU] Tauri WoW Server",
   EVERMOON = "[EN] Evermoon",
   // WOD = "[HU] Warriors of Darkness",
-  MISTBLADE = "Mistblade"
+  MISTBLADE = "Mistblade",
+  MISTBLADE_S2 = "Mistblade Season 2",
 }
 
 export enum ApiSource {
@@ -14,6 +15,7 @@ export const RealmXSource = {
   [Realm.TAURI]: ApiSource.TAURI,
   [Realm.EVERMOON]: ApiSource.TAURI,
   [Realm.MISTBLADE]: ApiSource.STORMFORGE,
+  [Realm.MISTBLADE_S2]: ApiSource.STORMFORGE,
 };
 
 export const ApiSourceInfo = {
