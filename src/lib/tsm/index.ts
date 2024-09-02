@@ -1,3 +1,4 @@
-export * from "src/lib/tsm/tsm";
-export * from "src/lib/tsm/math";
-export * from "src/lib/tsm/types";
+export * from "./math";
+export * from "./tsm";
+export * from "./types";
+

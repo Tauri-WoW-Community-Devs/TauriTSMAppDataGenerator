@@ -1,4 +1,4 @@
-import {Realm} from "src/constants/realms";
+import {Realm} from "../../constants/realms";
 
 export type TSMRealmInfo = {
   alliance: TSMItemObject;

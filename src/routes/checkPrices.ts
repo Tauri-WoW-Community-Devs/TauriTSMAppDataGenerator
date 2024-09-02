@@ -1,7 +1,7 @@
 import {NextFunction, Request, Response} from "express";
-import {Realm} from "src/constants/realms";
-import {fetchAuctionsItemPrices} from "../methods/auctions/auctions-item-prices";
+import {Realm} from "../constants/realms";
 import {AuctionItem} from "../methods/auctions/auctions-data";
+import {fetchAuctionsItemPrices} from "../methods/auctions/auctions-item-prices";
 
 type Faction = "ALLIANCE" | "HORDE" | "BOTH";
 type Body = {

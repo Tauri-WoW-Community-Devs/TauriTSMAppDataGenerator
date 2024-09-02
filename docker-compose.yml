@@ -1,0 +1,9 @@
+services:
+  app:
+    image: ghcr.io/tauri-wow-community-devs/tsm-app-data-generator:latest
+    pull_policy: always
+    restart: always
+    ports:
+      - "${SERVER_PORT:-9876}:${SERVER_PORT:-9876}"
+    env_file:
+      - .env.local

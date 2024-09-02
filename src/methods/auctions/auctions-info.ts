@@ -1,5 +1,5 @@
-import {apiCall} from "src/lib/api";
-import {Realm} from "src/constants/realms";
+import {Realm} from "../../constants/realms";
+import {apiCall} from "../../lib/api";
 
 export const fetchAuctionsInfo = (realm: Realm = Realm.TAURI) => apiCall<AuctionsInfoResult>("auctions-info", realm);
 

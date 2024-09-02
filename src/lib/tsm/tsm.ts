@@ -1,6 +1,6 @@
-import {AuctionItem} from "src/methods/auctions/auctions-data";
-import {TSMItemObject} from "src/lib/tsm/types";
-import {calculateMarketValue} from "src/lib/tsm/math";
+import {AuctionItem} from "../../methods/auctions/auctions-data";
+import {calculateMarketValue} from "./math";
+import type {TSMItemObject} from "./types";
 
 export const parseAHInfo = (items: AuctionItem[]): TSMItemObject => {
   items = items.filter(item => item.buyout > 0);
