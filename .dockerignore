@@ -1,0 +1,17 @@
+# Obvious...
+node_modules
+
+# Already built files
+dist
+
+# Cache
+.cache
+
+# IDE
+.vs
+.idea
+.editorconfig
+
+# Environment
+.env
+.env.local

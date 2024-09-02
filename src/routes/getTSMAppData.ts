@@ -1,6 +1,6 @@
 import {NextFunction, Request, Response} from "express";
-import {getQueryRealms} from "src/utils";
-import {generateTSMAppData} from "src/services/generateTSMAppData";
+import {generateTSMAppData} from "../services/generateTSMAppData";
+import {getQueryRealms} from "../utils";
 
 export const getTSMAppData = async (req: Request, res: Response, next: NextFunction) => {
   const realms = getQueryRealms(req);

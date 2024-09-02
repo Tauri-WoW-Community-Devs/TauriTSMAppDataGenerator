@@ -1,9 +1,9 @@
-import {Realm} from "src/constants/realms";
-import {AuctionsInfoResult, fetchAuctionsInfo} from "src/methods/auctions/auctions-info";
-import {cache} from "src/lib/cache";
-import {log} from "src/utils";
-import {fetchAuctionsData} from "src/methods/auctions/auctions-data";
-import {parseAHInfo, TSMItemObject, TSMRealmInfo} from "src/lib/tsm";
+import {log} from "console";
+import {Realm} from "../constants/realms";
+import {cache} from "../lib/cache";
+import {TSMItemObject, TSMRealmInfo, parseAHInfo} from "../lib/tsm";
+import {fetchAuctionsData} from "../methods/auctions/auctions-data";
+import {AuctionsInfoResult, fetchAuctionsInfo} from "../methods/auctions/auctions-info";
 
 export const cacheAuctionData = async (realm: Realm): Promise<TSMRealmInfo | undefined> => {
   if (realm === Realm.TAURI || realm === Realm.EVERMOON) {

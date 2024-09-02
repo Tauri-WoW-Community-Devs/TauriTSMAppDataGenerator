@@ -1,7 +1,7 @@
-import {getCachedData} from "src/services/cacheAuctionData";
-import {Realm} from "src/constants/realms";
-import {TSMFileData} from "src/lib/tsm";
-import {log} from "src/utils";
+import {log} from "console";
+import {Realm} from "../constants/realms";
+import type {TSMFileData} from "../lib/tsm";
+import {getCachedData} from "./cacheAuctionData";
 
 export const generateTSMAppData = async (realms: Realm[]) => {
   const fileData: TSMFileData = {};

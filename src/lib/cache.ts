@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import {log} from "src/utils";
+import {log} from "../utils";
 
 const wasInit = false;
 

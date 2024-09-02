@@ -12,7 +12,7 @@ export const initServer = () => {
   app.set("etag", false);
   app.use(
     express.static("public", {
-      maxAge: 300
+      maxAge: 300,
     })
   );
   app.use(express.json());

@@ -1,0 +1,45 @@
+name: Build and Publish Docker Images
+
+on:
+  push:
+    branches:
+      - master
+      - main
+      - docker
+    paths-ignore:
+      - ".editorconfig"
+      - "tsm.service"
+      - "README.md"
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - dockerfile: Dockerfile
+            image: ghcr.io/tauri-wow-community-devs/tsm-app-data-generator:latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./${{ matrix.dockerfile }}
+          push: true
+          tags: ${{ matrix.image }}
+          cache-from: type=gha, key=docker-${{ matrix.dockerfile }}-${{ matrix.image }}
+          cache-to: type=gha, key=docker-${{ matrix.dockerfile }}-${{ matrix.image }}, mode=max

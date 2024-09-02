@@ -1,5 +1,5 @@
 import {Request} from "express";
-import {Realm} from "src/constants/realms";
+import {Realm} from "./constants/realms";
 
 type Query = {
   realms: {
