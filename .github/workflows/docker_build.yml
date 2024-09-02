@@ -2,6 +2,10 @@ name: Build and Publish Docker Images
 
 on:
   push:
+    branches:
+      - master
+      - main
+      - docker
     paths:
       - "!.editorconfig"
       - "!tsm.service"
@@ -39,5 +43,3 @@ jobs:
           tags: ${{ matrix.image }}
           cache-from: type=gha, key=docker-${{ matrix.dockerfile }}-${{ matrix.image }}
           cache-to: type=gha, key=docker-${{ matrix.dockerfile }}-${{ matrix.image }}, mode=max
-          secrets: |
-            github_token=${{ secrets.COMPOSER_GITHUB_TOKEN }}
