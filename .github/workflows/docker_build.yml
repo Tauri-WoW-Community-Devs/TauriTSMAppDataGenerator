@@ -6,10 +6,10 @@ on:
       - master
       - main
       - docker
-    paths:
-      - "!.editorconfig"
-      - "!tsm.service"
-      - "!README.md"
+    paths-ignore:
+      - ".editorconfig"
+      - "tsm.service"
+      - "README.md"
 
 jobs:
   build-and-push:
