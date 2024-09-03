@@ -8,6 +8,7 @@ export const apiCall = async <T>(url: string, realm: Realm, params?: { [key: str
         "Content-Type": "application/json",
         "User-Agent": "TauriTSMAppDataGenerator"
       },
+      timeout: 15000,
     };
 
     const apiSource = RealmXSource[realm];
