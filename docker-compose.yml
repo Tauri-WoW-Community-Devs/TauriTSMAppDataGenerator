@@ -5,5 +5,7 @@ services:
     restart: always
     ports:
       - "${SERVER_PORT:-9876}:${SERVER_PORT:-9876}"
+    expose:
+      - "${SERVER_PORT:-9876}"
     env_file:
       - .env.local

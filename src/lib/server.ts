@@ -10,11 +10,8 @@ export const initServer = () => {
 
   const app = express();
   app.set("etag", false);
-  app.use(
-    express.static("public", {
-      maxAge: 300,
-    })
-  );
+  app.disable("x-powered-by");
+
   app.use(express.json());
   const PORT = Number(process.env.SERVER_PORT);
 
