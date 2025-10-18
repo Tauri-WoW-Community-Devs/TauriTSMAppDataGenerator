@@ -2,6 +2,8 @@ import {log} from "console";
 import {Realm} from "../constants/realms";
 import type {TSMFileData} from "../lib/tsm";
 import {getCachedData} from "./cacheAuctionData";
+import {generateLegionAppData} from "./generators/legion";
+import {generateMistsAppData} from "./generators/mists";
 
 export const generateTSMAppData = async (realms: Realm[]) => {
   const fileData: TSMFileData = {};
@@ -18,23 +20,13 @@ export const generateTSMAppData = async (realms: Realm[]) => {
 
   const keys = Object.keys(fileData) as Realm[];
 
-  let appData = "";
-  keys.forEach(realm => {
-    const realmData = fileData[realm];
-    if (!realmData)
-      return;
+  const isLegion = keys.some(realm => fileData[realm]?.expansion === 6);
 
-    const {lastModification, ...ahData} = realmData;
-    const json = JSON.stringify(ahData);
-
-    // Can't remember anymore - was "Both" related to cross-faction AH?
-    appData += `\t["${realm}-Both-${lastModification}"] = '${json}',\n`;
-  });
-
-  log("Generated AppData.lua");
-
-  return `local TSM = select(2, ...)
-TSM.AppData = {
-${appData}
-}`;
+  if (isLegion) {
+    log("Generated AppData.lua for Legion");
+    return generateLegionAppData(fileData);
+  } else {
+    log("Generated AppData.lua for Mists");
+    return generateMistsAppData(fileData);
+  }
 };

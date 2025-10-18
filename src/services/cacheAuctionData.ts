@@ -63,6 +63,7 @@ export const cacheAuctionData = async (realm: Realm): Promise<TSMRealmInfo | und
     alliance,
     horde,
     lastModification: aInfo.lastModified,
+    expansion: aInfo.expansion,
   };
 
   cache.set(`fetchAuctionsInfo-${realmName}`, aInfo);

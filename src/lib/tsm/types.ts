@@ -4,6 +4,7 @@ export type TSMRealmInfo = {
   alliance: TSMItemObject;
   horde: TSMItemObject;
   lastModification: number;
+  expansion: number;
 }
 
 export type TSMFileData = {

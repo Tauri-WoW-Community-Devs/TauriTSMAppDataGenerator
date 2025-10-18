@@ -14,7 +14,7 @@ export type AuctionsDataResult = {
 }
 
 type AuctionHouses = {
-  auctioner_1?: AuctionItem[] // Something new on Tauri/Evermoon?
+  auctioner_1?: AuctionItem[] // Official shared AH since WoD I guess
   auctioner_2?: AuctionItem[] // Alliance
   auctioner_6?: AuctionItem[] // Horde
   auctioner_7?: AuctionItem[] // Neutral
