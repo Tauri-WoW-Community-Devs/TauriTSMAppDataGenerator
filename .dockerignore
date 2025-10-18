@@ -15,3 +15,6 @@ dist
 # Environment
 .env
 .env.local
+
+# Others
+.github

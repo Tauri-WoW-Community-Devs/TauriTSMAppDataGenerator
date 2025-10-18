@@ -4,7 +4,7 @@
   "main": "src/index.ts",
   "license": "MIT",
   "scripts": {
-    "build": "tsc -P ./tsconfig.json",
+    "build": "bunx tsc -P ./tsconfig.json",
     "start": "ts-node ./src/index.ts"
   },
   "engines": {
