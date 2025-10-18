@@ -1,22 +1,22 @@
-FROM node:24-alpine AS builder
+FROM oven/bun:1.3.0-alpine AS builder
 
 WORKDIR /app
 
-# Copy package.json and yarn.lock
-COPY package.json yarn.lock ./
+COPY package.json bun.lock ./
 
-# Install dependencies
-RUN yarn install --frozen-lockfile
+RUN bun install --frozen-lockfile
 
-# Copy source files and tsconfig
-COPY src ./src
-COPY tsconfig.json ./
+COPY . .
 
-# Build the project
-RUN yarn build
+RUN bun run build
 
-# Remove dev dependencies
-RUN yarn install --production --ignore-scripts --prefer-offline
+FROM oven/bun:1.3.0-alpine
 
-# Start the application
-CMD ["node", "dist/index.js"]
+WORKDIR /app
+
+COPY package.json bun.lock ./
+RUN bun install --production
+
+COPY --from=builder /app/dist ./dist
+
+CMD ["bun", "dist/index.js"]
