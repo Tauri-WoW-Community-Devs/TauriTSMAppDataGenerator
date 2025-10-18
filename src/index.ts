@@ -12,7 +12,7 @@ const realms = [
   Realm.TAURI,
   Realm.EVERMOON,
   Realm.MISTBLADE,
-  Realm.MISTBLADE_S2,
+  Realm.SHEILUN,
 ];
 
 let fetchAHInProgress = false;
