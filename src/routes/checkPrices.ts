@@ -42,11 +42,11 @@ export const checkPrices = async (req: Request, res: Response, next: NextFunctio
 
     let auctions: AuctionItem[] = [];
     if (faction === "ALLIANCE")
-      auctions = itemInfo.auctions.auctioner_2;
+      auctions = itemInfo.auctions.auctioner_2 || [];
     else if (faction === "HORDE")
-      auctions = itemInfo.auctions.auctioner_6;
+      auctions = itemInfo.auctions.auctioner_6 || [];
     else if (faction === "BOTH")
-      auctions = [...itemInfo.auctions.auctioner_2, ...itemInfo.auctions.auctioner_6];
+      auctions = [...itemInfo.auctions.auctioner_2 || [], ...itemInfo.auctions.auctioner_6 || []];
 
     const items = auctions.filter(x => {
       const buyout = (x.buyout / (x.stackCount || 1));

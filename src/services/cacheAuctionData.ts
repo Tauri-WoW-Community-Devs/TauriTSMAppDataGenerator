@@ -2,7 +2,7 @@ import {log} from "console";
 import {Realm} from "../constants/realms";
 import {cache} from "../lib/cache";
 import {TSMItemObject, TSMRealmInfo, parseAHInfo} from "../lib/tsm";
-import {fetchAuctionsData} from "../methods/auctions/auctions-data";
+import {AuctionItem, fetchAuctionsData} from "../methods/auctions/auctions-data";
 import {AuctionsInfoResult, fetchAuctionsInfo} from "../methods/auctions/auctions-info";
 
 export const cacheAuctionData = async (realm: Realm): Promise<TSMRealmInfo | undefined> => {
@@ -33,20 +33,29 @@ export const cacheAuctionData = async (realm: Realm): Promise<TSMRealmInfo | und
     return;
   }
 
-  const isSharedAH = auctions.auctions.auctioner_7 && !auctions.auctions.auctioner_2 && !auctions.auctions.auctioner_6;
   let alliance: TSMItemObject;
   let horde: TSMItemObject;
 
-  if (isSharedAH) {
-    const shared = parseAHInfo(auctions.auctions.auctioner_7);
+  const ah = auctions.auctions;
+  const ahKeys = Object.keys(ah);
+
+  let sharedSourceData: AuctionItem[] | undefined;
+  if (ah.auctioner_7) {
+    sharedSourceData = ah.auctioner_7;
+  } else if (ahKeys.length === 1) {
+    const key = ahKeys[0] as keyof typeof ah;
+    sharedSourceData = ah[key];
+  }
+
+  if (sharedSourceData) {
+    const shared = parseAHInfo(sharedSourceData);
     log(`${realmName} - Parsing AH Info - Shared`);
     alliance = shared;
     horde = shared;
-  }
-  else {
-    alliance = parseAHInfo(auctions.auctions.auctioner_2);
+  } else {
+    alliance = parseAHInfo(ah.auctioner_2 || []);
     log(`${realmName} - Parsing AH Info - Alliance`);
-    horde = parseAHInfo(auctions.auctions.auctioner_6);
+    horde = parseAHInfo(ah.auctioner_6 || []);
     log(`${realmName} - Parsing AH Info - Horde`);
   }
 

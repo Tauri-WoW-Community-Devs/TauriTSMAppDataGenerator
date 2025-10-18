@@ -14,9 +14,10 @@ export type AuctionsDataResult = {
 }
 
 type AuctionHouses = {
-  auctioner_2: AuctionItem[] // Alliance
-  auctioner_6: AuctionItem[] // Horde
-  auctioner_7: AuctionItem[] // Neutral
+  auctioner_1?: AuctionItem[] // Something new on Tauri/Evermoon?
+  auctioner_2?: AuctionItem[] // Alliance
+  auctioner_6?: AuctionItem[] // Horde
+  auctioner_7?: AuctionItem[] // Neutral
 }
 
 enum TimeLeft {
