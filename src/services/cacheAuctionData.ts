@@ -5,17 +5,20 @@ import {TSMItemObject, TSMRealmInfo, parseAHInfo} from "../lib/tsm";
 import {AuctionItem, fetchAuctionsData} from "../methods/auctions/auctions-data";
 import {AuctionsInfoResult, fetchAuctionsInfo} from "../methods/auctions/auctions-info";
 
-export const cacheAuctionData = async (realm: Realm): Promise<TSMRealmInfo | undefined> => {
+const getCacheRealm = (realm: Realm): Realm => {
   if (realm === Realm.TAURI || realm === Realm.EVERMOON) {
     // Those realms have cross-realm AH, share cache as well.
     // Pick Evermoon since it has higher pop
-    // If Tauri realm is ever going to shut down - at least we have a prevention .
-    realm = Realm.TAURI;
+    // If Tauri realm is ever going to shut down - at least we have a prevention.
+    return Realm.TAURI;
   }
+  return realm;
+};
 
-  const realmName = realm.toString();
-
-  const aInfo = await fetchAuctionsInfo(realm);
+export const cacheAuctionData = async (realm: Realm): Promise<TSMRealmInfo | undefined> => {
+  const realmForCache = getCacheRealm(realm);
+  const realmName = realmForCache.toString();
+  const aInfo = await fetchAuctionsInfo(realmForCache);
   if (!aInfo) {
     log(`${realmName} - fetchAuctionsInfo - no response from server`, "WARN");
     return;
@@ -27,7 +30,7 @@ export const cacheAuctionData = async (realm: Realm): Promise<TSMRealmInfo | und
     return cache.get<TSMRealmInfo>(`tsmData-${realmName}`);
   }
 
-  const auctions = await fetchAuctionsData(realm);
+  const auctions = await fetchAuctionsData(realmForCache);
   if (!auctions?.auctions) {
     log(`${realmName} - No auctions were found`, "WARN");
     return;
@@ -73,7 +76,8 @@ export const cacheAuctionData = async (realm: Realm): Promise<TSMRealmInfo | und
 };
 
 export const getCachedData = (realm: Realm): Promise<TSMRealmInfo | undefined> => {
-  const realmName = realm.toString();
+  const realmForCache = getCacheRealm(realm);
+  const realmName = realmForCache.toString();
 
   const dataKey = `tsmData-${realmName}`;
   const dataCache = cache.get<TSMRealmInfo>(dataKey);

@@ -9,3 +9,6 @@ services:
       - "${SERVER_PORT:-9876}"
     env_file:
       - .env.local
+    volumes:
+      - type: tmpfs
+        target: /app/.cache

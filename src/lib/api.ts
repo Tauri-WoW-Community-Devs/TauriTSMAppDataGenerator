@@ -1,7 +1,7 @@
 import axios, {AxiosRequestConfig} from "axios";
 import {ApiSourceInfo, Realm, RealmXSource} from "../constants/realms";
 
-export const apiCall = async <T>(url: string, realm: Realm, params?: { [key: string]: any }) => {
+export const apiCall = async <T>(url: string, realm: Realm, params?: Record<string, unknown>) => {
   try {
     const config: AxiosRequestConfig = {
       headers: {

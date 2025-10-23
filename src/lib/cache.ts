@@ -29,7 +29,7 @@ const get = <T>(key: string): T | undefined => {
   }
 };
 
-const set = (key: string, data: any) => {
+const set = (key: string, data: unknown) => {
   init();
 
   const cachePath = path.resolve(cacheDir, key);

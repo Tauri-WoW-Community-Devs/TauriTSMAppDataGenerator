@@ -2,21 +2,22 @@ import {Request} from "express";
 import {Realm} from "./constants/realms";
 
 type Query = {
-  realms: {
-    tauri: any;
-    mistblade: any;
-    sheilun: any;
-  }
+  realms?: {
+    tauri?: string;
+    mistblade?: string;
+    sheilun?: string;
+  };
 }
 
 export const getQueryRealms = (req: Request) => {
   // To assure backward compatibility - all desktop apps were only fetching Tauri AH data.
   let tauri = 1, mistblade = 1, sheilun = 1;
-  if (req.query.realms !== undefined) {
-    const queryRealms = (req.query as Query).realms || {};
-    tauri = parseInt(queryRealms.tauri) || 0;
-    mistblade = parseInt(queryRealms.mistblade) || 0;
-    sheilun = parseInt(queryRealms.sheilun) || 0;
+  const query = req.query as Query;
+  if (typeof query.realms === "object" && query.realms !== null) {
+    const queryRealms = query.realms;
+    tauri = parseInt(queryRealms.tauri || "0") || 0;
+    mistblade = parseInt(queryRealms.mistblade || "0") || 0;
+    sheilun = parseInt(queryRealms.sheilun || "0") || 0;
   }
 
   const realms = [];
