@@ -2,8 +2,8 @@ import cron from "node-cron";
 import {Realm} from "./constants/realms";
 import {initDotEnv} from "./lib/env";
 import {initServer} from "./lib/server";
+import logger from "./lib/logger";
 import {cacheAuctionData} from "./services/cacheAuctionData";
-import {log} from "./utils";
 
 initDotEnv();
 initServer();
@@ -16,28 +16,29 @@ const realms = [
 ];
 
 const fetchAllRealmsData = async () => {
-  log("Starting CRON realm data fetch.");
+  logger.info("Starting CRON realm data fetch.");
   try {
     for (const realm of realms) {
-      log(`${realm.toString()} - start`);
+      logger.info(`${realm.toString()} - start`);
       await cacheAuctionData(realm);
-      log(`${realm.toString()} - end`);
+      logger.info(`${realm.toString()} - end`);
     }
-    log("CRON realm data fetch finished successfully.");
+    logger.info("CRON realm data fetch finished successfully.");
   } catch (error) {
     if (error instanceof Error) {
-      log(`CRON realm data fetch failed: ${error.message}`, "ERROR");
+      logger.error(`CRON realm data fetch failed: ${error.message}`);
     } else {
-      log("CRON realm data fetch failed with an unknown error.", "ERROR");
+      logger.error("CRON realm data fetch failed with an unknown error.");
     }
   }
 };
 
-log("Performing initial data fetch...");
+logger.info("Performing initial data fetch...");
 fetchAllRealmsData();
 
-log("Setting up cron job...");
+logger.info("Setting up cron job...");
 cron.schedule("* * * * *", () => {
-  log("Cron job triggered");
+  logger.info("Cron job triggered");
   fetchAllRealmsData();
 });
+

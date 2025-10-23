@@ -1,6 +1,6 @@
 import axios, {AxiosRequestConfig} from "axios";
 import {ApiSourceInfo, Realm, RealmXSource} from "../constants/realms";
-import {log} from "../utils";
+import logger from "./logger";
 
 export const apiCall = async <T>(url: string, realm: Realm, params?: Record<string, unknown>) => {
   try {
@@ -30,9 +30,9 @@ export const apiCall = async <T>(url: string, realm: Realm, params?: Record<stri
     return result.data.response;
   } catch (err) {
     if (err instanceof Error) {
-      log(`API call for ${url} on realm ${realm} failed: ${err.message}`, "ERROR");
+      logger.error(`API call for ${url} on realm ${realm} failed: ${err.message}`);
     } else {
-      log(`API call for ${url} on realm ${realm} failed: ${String(err)}`, "ERROR");
+      logger.error(`API call for ${url} on realm ${realm} failed: ${String(err)}`);
     }
   }
 };

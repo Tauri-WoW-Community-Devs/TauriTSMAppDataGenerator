@@ -1,11 +1,12 @@
 import express from "express";
 import {checkPrices} from "../routes/checkPrices";
 import {getTSMAppData} from "../routes/getTSMAppData";
+import logger from "./logger";
 import {healthCheck} from "../routes/health";
 
 export const initServer = () => {
   if (!process.env.SERVER_PORT) {
-    console.info("SERVER_PORT env variable is not set. Server won't start.");
+    logger.warn("SERVER_PORT env variable is not set. Server won't start.");
     return;
   }
 
@@ -21,6 +22,7 @@ export const initServer = () => {
   app.get("/get-tsm-appdata", getTSMAppData);
   app.post("/check-prices", checkPrices);
   app.listen(PORT, () => {
-    console.log(`⚡️[server]: Server is running at port ${PORT}`);
+    logger.info(`⚡️[server]: Server is running at port ${PORT}`);
   });
 };
+

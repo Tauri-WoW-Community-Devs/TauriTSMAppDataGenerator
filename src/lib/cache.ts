@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import {log} from "../utils";
+import logger from "./logger";
 
 const cacheDir = ".cache";
 
@@ -20,7 +20,7 @@ const get = <T>(key: string): T | undefined => {
     const json = fs.readFileSync(cachePath, {flag: "r", encoding: "utf-8"});
     return JSON.parse(json) as T;
   } catch (e) {
-    log(`Failed to read cache key ${key}`, "ERROR");
+    logger.error(`Failed to read cache key ${key}`);
   }
 };
 
@@ -32,7 +32,7 @@ const set = (key: string, data: unknown) => {
   try {
     fs.writeFileSync(cachePath, JSON.stringify(data), {flag: "w", encoding: "utf-8"});
   } catch (e) {
-    log(`Failed to write cache key ${key}`, "ERROR");
+    logger.error(`Failed to write cache key ${key}`);
   }
 };
 

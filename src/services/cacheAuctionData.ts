@@ -1,7 +1,7 @@
-import {log} from "console";
 import {Realm} from "../constants/realms";
 import {cache} from "../lib/cache";
 import {TSMItemObject, TSMRealmInfo, parseAHInfo} from "../lib/tsm";
+import logger from "../lib/logger";
 import {AuctionItem, fetchAuctionsData} from "../methods/auctions/auctions-data";
 import {AuctionsInfoResult, fetchAuctionsInfo} from "../methods/auctions/auctions-info";
 
@@ -20,19 +20,19 @@ export const cacheAuctionData = async (realm: Realm): Promise<TSMRealmInfo | und
   const realmName = realmForCache.toString();
   const aInfo = await fetchAuctionsInfo(realmForCache);
   if (!aInfo) {
-    log(`${realmName} - fetchAuctionsInfo - no response from server`, "WARN");
+    logger.warn(`${realmName} - fetchAuctionsInfo - no response from server`);
     return;
   }
 
   const lastAInfo = cache.get<AuctionsInfoResult>(`fetchAuctionsInfo-${realmName}`);
   if (lastAInfo && lastAInfo.lastModified >= aInfo.lastModified) {
-    log(`${realmName} - Cache up-to date`);
+    logger.info(`${realmName} - Cache up-to date`);
     return cache.get<TSMRealmInfo>(`tsmData-${realmName}`);
   }
 
   const auctions = await fetchAuctionsData(realmForCache);
   if (!auctions?.auctions) {
-    log(`${realmName} - No auctions were found`, "WARN");
+    logger.warn(`${realmName} - No auctions were found`);
     return;
   }
 
@@ -52,14 +52,14 @@ export const cacheAuctionData = async (realm: Realm): Promise<TSMRealmInfo | und
 
   if (sharedSourceData) {
     const shared = parseAHInfo(sharedSourceData);
-    log(`${realmName} - Parsing AH Info - Shared`);
+    logger.info(`${realmName} - Parsing AH Info - Shared`);
     alliance = shared;
     horde = shared;
   } else {
     alliance = parseAHInfo(ah.auctioner_2 || []);
-    log(`${realmName} - Parsing AH Info - Alliance`);
+    logger.info(`${realmName} - Parsing AH Info - Alliance`);
     horde = parseAHInfo(ah.auctioner_6 || []);
-    log(`${realmName} - Parsing AH Info - Horde`);
+    logger.info(`${realmName} - Parsing AH Info - Horde`);
   }
 
   const data: TSMRealmInfo = {
@@ -69,7 +69,7 @@ export const cacheAuctionData = async (realm: Realm): Promise<TSMRealmInfo | und
     expansion: aInfo.expansion,
   };
 
-  log(`${realmName} - Caching new data`);
+  logger.info(`${realmName} - Caching new data`);
   cache.set(`fetchAuctionsInfo-${realmName}`, aInfo);
   cache.set(`tsmData-${realmName}`, data);
 

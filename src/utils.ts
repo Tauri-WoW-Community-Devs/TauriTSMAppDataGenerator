@@ -30,12 +30,3 @@ export const getQueryRealms = (req: Request) => {
 
   return realms;
 };
-
-export const log = (msg: string, type: "ERROR" | "WARN" | "OK" = "OK") => {
-  let color = "\x1b[0m"; // RESET;
-  if (type === "ERROR")
-    color = "\x1b[31m";
-  else if (type === "WARN")
-    color = "\x1b[33m";
-  console.log(color, `[TSM] ${msg}`);
-};

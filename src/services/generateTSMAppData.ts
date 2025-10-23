@@ -1,6 +1,6 @@
-import {log} from "console";
 import {Realm} from "../constants/realms";
 import type {TSMFileData} from "../lib/tsm";
+import logger from "../lib/logger";
 import {getCachedData} from "./cacheAuctionData";
 import {generateLegionAppData} from "./generators/legion";
 import {generateMistsAppData} from "./generators/mists";
@@ -16,17 +16,17 @@ export const generateTSMAppData = async (realms: Realm[]) => {
     fileData[realm] = data;
   }
 
-  log("Generating AppData.lua");
+  logger.info("Generating AppData.lua");
 
   const keys = Object.keys(fileData) as Realm[];
 
   const isLegion = keys.some(realm => fileData[realm]?.expansion === 6);
 
   if (isLegion) {
-    log("Generated AppData.lua for Legion");
+    logger.info("Generated AppData.lua for Legion");
     return generateLegionAppData(fileData);
   } else {
-    log("Generated AppData.lua for Mists");
+    logger.info("Generated AppData.lua for Mists");
     return generateMistsAppData(fileData);
   }
 };

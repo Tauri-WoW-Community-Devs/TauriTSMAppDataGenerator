@@ -13,6 +13,9 @@ FROM oven/bun:1-alpine
 
 WORKDIR /app
 
+ENV NODE_ENV=production
+ENV LOG_FORMAT=pretty
+
 RUN apk add --no-cache curl
 
 COPY package.json bun.lock ./
