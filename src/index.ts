@@ -19,7 +19,11 @@ let fetchAHInProgress = false;
 
 // Every minute
 cron.schedule("* * * * *", async () => {
-  if (fetchAHInProgress) return;
+  log("Cron job triggered");
+  if (fetchAHInProgress) {
+    log("Fetch already in progress, skipping.", "WARN");
+    return;
+  }
 
   try {
     fetchAHInProgress = true;

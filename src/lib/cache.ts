@@ -2,14 +2,9 @@ import fs from "fs";
 import path from "path";
 import {log} from "../utils";
 
-const wasInit = false;
-
 const cacheDir = ".cache";
 
 const init = () => {
-  if (wasInit)
-    return;
-
   if (!fs.existsSync(cacheDir))
     fs.mkdirSync(cacheDir, {recursive: true});
 };

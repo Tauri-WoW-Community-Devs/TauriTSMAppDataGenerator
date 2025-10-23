@@ -1,5 +1,6 @@
 import axios, {AxiosRequestConfig} from "axios";
 import {ApiSourceInfo, Realm, RealmXSource} from "../constants/realms";
+import {log} from "../utils";
 
 export const apiCall = async <T>(url: string, realm: Realm, params?: Record<string, unknown>) => {
   try {
@@ -28,7 +29,11 @@ export const apiCall = async <T>(url: string, realm: Realm, params?: Record<stri
     const result = await axios.post<APIResponse<T>>(apiEndpoint, data, config);
     return result.data.response;
   } catch (err) {
-    console.log(err);
+    if (err instanceof Error) {
+      log(`API call for ${url} on realm ${realm} failed: ${err.message}`, "ERROR");
+    } else {
+      log(`API call for ${url} on realm ${realm} failed: ${String(err)}`, "ERROR");
+    }
   }
 };
 

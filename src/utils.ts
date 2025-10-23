@@ -36,6 +36,6 @@ export const log = (msg: string, type: "ERROR" | "WARN" | "OK" = "OK") => {
   if (type === "ERROR")
     color = "\x1b[31m";
   else if (type === "WARN")
-    color = "\"\x1b[33m\"";
+    color = "\x1b[33m";
   console.log(color, `[TSM] ${msg}`);
 };

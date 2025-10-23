@@ -69,6 +69,7 @@ export const cacheAuctionData = async (realm: Realm): Promise<TSMRealmInfo | und
     expansion: aInfo.expansion,
   };
 
+  log(`${realmName} - Caching new data`);
   cache.set(`fetchAuctionsInfo-${realmName}`, aInfo);
   cache.set(`tsmData-${realmName}`, data);
 
