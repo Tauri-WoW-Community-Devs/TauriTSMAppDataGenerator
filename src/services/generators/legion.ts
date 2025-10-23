@@ -9,10 +9,10 @@ const generateAuctionDBBlock = (data: TSMItemObject, realmName: string, timestam
   const sortedItemIds = Object.keys(data).sort((a, b) => parseInt(a) - parseInt(b));
   const dataRows = sortedItemIds.map(itemId => {
     const item = data[itemId];
-    return `            {${itemId}, ${item.b}, ${item.m}, ${item.n}, ${item.m}}`;
+    return `            {${itemId}, ${item.b}, ${item.m}, ${item.n}}`;
   }).join(",\n");
 
-  return `TSM.LoadData("AUCTIONDB_MARKET_DATA", "${realmName}", [[\n    return {\n        downloadTime=${timestamp},\n        fields={"itemID", "minBuyout", "marketValue", "numAuctions", "historical"},\n        data={\n${dataRows}\n        }\n    }\n]])`;
+  return `TSM.LoadData("AUCTIONDB_MARKET_DATA", "${realmName}", [[\n    return {\n        downloadTime=${timestamp},\n        fields={"itemID", "minBuyout", "marketValue", "numAuctions"},\n        data={\n${dataRows}\n        }\n    }\n]])`;
 };
 
 
