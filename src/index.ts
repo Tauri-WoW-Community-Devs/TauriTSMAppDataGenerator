@@ -15,24 +15,29 @@ const realms = [
   Realm.SHEILUN,
 ];
 
-let fetchAHInProgress = false;
-
-// Every minute
-cron.schedule("* * * * *", async () => {
-  log("Cron job triggered");
-  if (fetchAHInProgress) {
-    log("Fetch already in progress, skipping.", "WARN");
-    return;
-  }
-
+const fetchAllRealmsData = async () => {
+  log("Starting CRON realm data fetch.");
   try {
-    fetchAHInProgress = true;
     for (const realm of realms) {
       log(`${realm.toString()} - start`);
       await cacheAuctionData(realm);
       log(`${realm.toString()} - end`);
     }
-  } finally {
-    fetchAHInProgress = false;
+    log("CRON realm data fetch finished successfully.");
+  } catch (error) {
+    if (error instanceof Error) {
+      log(`CRON realm data fetch failed: ${error.message}`, "ERROR");
+    } else {
+      log("CRON realm data fetch failed with an unknown error.", "ERROR");
+    }
   }
+};
+
+log("Performing initial data fetch...");
+fetchAllRealmsData();
+
+log("Setting up cron job...");
+cron.schedule("* * * * *", () => {
+  log("Cron job triggered");
+  fetchAllRealmsData();
 });
