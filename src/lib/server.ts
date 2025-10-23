@@ -1,6 +1,7 @@
 import express from "express";
 import {checkPrices} from "../routes/checkPrices";
 import {getTSMAppData} from "../routes/getTSMAppData";
+import {healthCheck} from "../routes/health";
 
 export const initServer = () => {
   if (!process.env.SERVER_PORT) {
@@ -16,6 +17,7 @@ export const initServer = () => {
   const PORT = Number(process.env.SERVER_PORT);
 
   app.get("/", (req, res) => res.send("/wave"));
+  app.get("/health", healthCheck);
   app.get("/get-tsm-appdata", getTSMAppData);
   app.post("/check-prices", checkPrices);
   app.listen(PORT, () => {

@@ -12,3 +12,9 @@ services:
     volumes:
       - type: tmpfs
         target: /app/.cache
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:${SERVER_PORT:-9876}/health"]
+      interval: 1m
+      timeout: 10s
+      retries: 3
+      start_period: 30s
