@@ -11,8 +11,6 @@ initServer();
 const realms = [
   Realm.TAURI,
   Realm.EVERMOON,
-  Realm.MISTBLADE,
-  Realm.SHEILUN,
 ];
 
 const fetchAllRealmsData = async () => {
