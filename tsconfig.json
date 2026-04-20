@@ -16,6 +16,7 @@
     "moduleResolution": "NodeNext",
     "noEmit": false,
     "outDir": "dist",
+    "rootDir": "src",
     "removeComments": true,
     "resolveJsonModule": true,
     "sourceMap": true,
