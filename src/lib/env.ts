@@ -18,8 +18,6 @@ export const initDotEnv = () => {
   const envVariables = [
     "API_KEY",
     "SECRET_KEY",
-    "STORMFORGE_API_KEY",
-    "STORMFORGE_SECRET_KEY",
   ];
   envVariables.forEach((env) => {
     if (!process.env[env]) throw new Error(`Missing .env variable: ${env}`);

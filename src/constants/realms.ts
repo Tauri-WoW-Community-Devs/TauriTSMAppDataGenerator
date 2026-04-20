@@ -1,32 +1,22 @@
 export enum Realm {
-  TAURI = "[HU] Tauri WoW Server",
-  EVERMOON = "[EN] Evermoon",
-  // WOD = "[HU] Warriors of Darkness",
-  MISTBLADE = "Mistblade",
-  SHEILUN = "Sheilun",
+	TAURI = "[HU] Tauri WoW Server",
+	EVERMOON = "[EN] Evermoon",
+	// WOD = "[HU] Warriors of Darkness",
 }
 
 export enum ApiSource {
-  TAURI,
-  STORMFORGE,
+	TAURI,
 }
 
 export const RealmXSource = {
-  [Realm.TAURI]: ApiSource.TAURI,
-  [Realm.EVERMOON]: ApiSource.TAURI,
-  [Realm.MISTBLADE]: ApiSource.STORMFORGE,
-  [Realm.SHEILUN]: ApiSource.STORMFORGE,
+	[Realm.TAURI]: ApiSource.TAURI,
+	[Realm.EVERMOON]: ApiSource.TAURI,
 };
 
 export const ApiSourceInfo = {
-  [ApiSource.TAURI]: {
-    baseUrl: "http://chapi.tauri.hu/apiIndex.php",
-    key: () => process.env.API_KEY,
-    secret: () => process.env.SECRET_KEY,
-  },
-  [ApiSource.STORMFORGE]: {
-    baseUrl: "https://characters-api.stormforge.gg/v1/",
-    key: () => process.env.STORMFORGE_API_KEY,
-    secret: () => process.env.STORMFORGE_SECRET_KEY,
-  },
+	[ApiSource.TAURI]: {
+		baseUrl: "http://chapi.tauri.hu/apiIndex.php",
+		key: () => process.env.API_KEY,
+		secret: () => process.env.SECRET_KEY,
+	},
 };
