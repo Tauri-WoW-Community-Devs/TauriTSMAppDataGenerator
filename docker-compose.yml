@@ -8,12 +8,26 @@ services:
     expose:
       - "${SERVER_PORT:-9876}"
     env_file:
-      - .env.local
+      - path: .env.local
+        required: false
+    environment:
+      - API_KEY=${API_KEY}
+      - SECRET_KEY=${SECRET_KEY}
+      - SERVER_PORT=${SERVER_PORT:-9876}
+      - NODE_ENV=${NODE_ENV:-production}
+      - LOG_LEVEL=${LOG_LEVEL:-info}
+      - LOG_FORMAT=${LOG_FORMAT:-json}
     volumes:
       - type: tmpfs
         target: /app/.cache
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 256M
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:${SERVER_PORT:-9876}/health"]
+      test:
+        ["CMD", "curl", "-f", "http://localhost:${SERVER_PORT:-9876}/health"]
       interval: 1m
       timeout: 10s
       retries: 3

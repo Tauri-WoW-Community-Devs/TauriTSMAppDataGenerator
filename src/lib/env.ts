@@ -11,15 +11,15 @@ export const initDotEnv = () => {
     envFile = ".env";
   }
 
-  config({
-    path: envFile,
-  });
+  if (fs.existsSync(path.resolve(envFile))) {
+    config({
+      path: envFile,
+      override: true,
+    });
+  }
 
-  const envVariables = [
-    "API_KEY",
-    "SECRET_KEY",
-  ];
-  envVariables.forEach((env) => {
+  const requiredVars = ["API_KEY", "SECRET_KEY"];
+  requiredVars.forEach((env) => {
     if (!process.env[env]) throw new Error(`Missing .env variable: ${env}`);
   });
 };
